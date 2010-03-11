@@ -1,0 +1,17 @@
+/*
+    Jason Project
+
+    -- created on March 11, 2010
+*/
+
+MAS mas {
+   infrastructure: Centralised
+
+   agents:
+       sample;
+       taxi;
+       customer;
+       boss;
+
+   aslSourcePath: "src/asl"; 
+}
