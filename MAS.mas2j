@@ -7,8 +7,9 @@
 MAS mas {
    infrastructure: Centralised
 
+   environment: main.TaxiWorldModel(gui)
+
    agents:
-       sample;
        taxi;
        customer;
        boss;
