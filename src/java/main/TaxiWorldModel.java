@@ -42,6 +42,14 @@ public class TaxiWorldModel extends GridWorldModel {
         return false;
     }
     
+    public boolean hasCustomer() {
+        return hasCustomer;
+    }
+    
+    public boolean isAtTaxiRank() {
+        return isAtTaxiRank();
+    }
+    
     public int getTAXIRANK() {
         return TAXIRANK;
     }
