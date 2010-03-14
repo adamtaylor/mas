@@ -9,6 +9,13 @@ public class TaxiEnvironment extends Environment {
     private Logger logger = Logger.getLogger("MAS."+TaxiEnvironment.class.getName());
     private TaxiWorldModel model;
     
+    //common literals
+    public static final Literal gc  = Literal.parseLiteral("get(customer)");
+    public static final Literal dc  = Literal.parseLiteral("drop(customer)");
+    public static final Literal at = Literal.parseLiteral("at(taxi,taxirank)");
+    public static final Literal ac = Literal.parseLiteral("at(taxi,cinema)");
+
+    
     @Override
     public void init(String[] args) {
         model = new TaxiWorldModel();
@@ -29,6 +36,18 @@ public class TaxiEnvironment extends Environment {
     }
     
     public void updatePercepts() {
+        clearPercepts("taxi");
+        
+        // get the robot location
+        Location lTaxi = model.getAgPos(0);
+
+        // add agent location to its percepts
+        if (lTaxi.equals(model.lTaxiRank)) {
+            addPercept("taxi", at);
+        }
+        if (lTaxi.equals(model.lCinema)) {
+            addPercept("taxi", ac);
+        }
         
     }
     
@@ -57,12 +76,13 @@ public class TaxiEnvironment extends Environment {
                 e.printStackTrace();
             }
             
-//        } else if (action.equals(gb)) {
-//            result = model.getBeer();
-//            
-//        } else if (action.equals(hb)) {
-//            result = model.handInBeer();
-//            
+        } else if (action.equals(gc)) {
+            logger.info("about to getCustomer() "+action);
+            result = model.getCustomer();
+            
+        } else if (action.equals(dc)) {
+            result = model.dropCustomer();
+            
 //        } else if (action.equals(sb)) {
 //            result = model.sipBeer();
 //            
@@ -75,14 +95,13 @@ public class TaxiEnvironment extends Environment {
 //                logger.info("Failed to execute action deliver!"+e);
 //            }
 //            
-//        } else {
-//            logger.info("Failed to execute action "+action);
-//        }
-//
-//        if (result) {
-//            updatePercepts();
-//            try { Thread.sleep(100); } catch (Exception e) {}
-//        }
+        } else {
+            logger.info("Failed to execute action "+action);
+        }
+
+        if (result) {
+            updatePercepts();
+            try { Thread.sleep(100); } catch (Exception e) {}
         }
         return result;
     }

@@ -11,7 +11,11 @@
 +!getCustomer
 	: not has(customer)
 	<- !at(taxi,taxirank);
-	   	get(customer).
+	   	get(customer);
+	   	!at(taxi,cinema);
+	   	drop(customer);
+	   	!getCustomer.
+	   	
 
 	
 +!at(taxi,P) : at(taxi,P) <- true.

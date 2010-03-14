@@ -10,6 +10,7 @@ public class TaxiWorldModel extends GridWorldModel {
     
     private boolean hasCustomer = false;
     private boolean isAtTaxiRank = false;
+    private boolean isAtCinema = false;
     
     private static final int gridSize = 20;
     
@@ -77,6 +78,17 @@ public class TaxiWorldModel extends GridWorldModel {
             view.update(lTaxiRank.x,lTaxiRank.y);
             view.update(lCinema.x,lCinema.y);
         }
+        
+        if (taxi.x == 0 && taxi.y == 0) {
+            isAtTaxiRank = true;
+        }
+        
+        if (taxi.x == 20 && taxi.y == 20) {
+            isAtCinema = true;
+        }
+
+        
+        logger.info("about to return true");
         return true;
     }
 
