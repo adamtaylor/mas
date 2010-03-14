@@ -4,8 +4,17 @@
 
 /* Initial goals */
 
-!start.
+!getCustomer.
 
 /* Plans */
 
-+!start : true <- .print("hello world.").
++!getCustomer
+	: not has(customer)
+	<- !at(taxi,taxirank);
+	   	get(customer).
+
+	
++!at(taxi,P) : at(taxi,P) <- true.
++!at(taxi,P) : not at(taxi,P)
+	<- move_towards(P);
+    	!at(taxi,P).

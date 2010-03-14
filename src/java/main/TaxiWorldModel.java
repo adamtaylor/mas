@@ -1,9 +1,13 @@
 package main;
 
+import java.util.logging.Logger;
+
 import jason.environment.grid.GridWorldModel;
 import jason.environment.grid.Location;
 
 public class TaxiWorldModel extends GridWorldModel {
+    private Logger logger = Logger.getLogger("MAS."+TaxiWorldModel.class.getName());
+    
     private boolean hasCustomer = false;
     private boolean isAtTaxiRank = false;
     
@@ -47,7 +51,7 @@ public class TaxiWorldModel extends GridWorldModel {
     }
     
     public boolean isAtTaxiRank() {
-        return isAtTaxiRank();
+        return isAtTaxiRank;
     }
     
     public int getTAXIRANK() {
@@ -58,14 +62,17 @@ public class TaxiWorldModel extends GridWorldModel {
         return CINEMA;
     }
     
-    boolean moveTowards(Location dest) {
+    public boolean moveTowards(Location dest) {
+        logger.info("attempting to move the taxi");
         Location taxi = getAgPos(0);
+        logger.info("taxi.x && taxi.yy == "+taxi.x+" "+taxi.y);
         if (taxi.x < dest.x)        taxi.x++;
         else if (taxi.x > dest.x)   taxi.x--;
         if (taxi.y < dest.y)        taxi.y++;
         else if (taxi.y > dest.y)   taxi.y--;
         setAgPos(0, taxi); 
-        
+        logger.info("taxi.x && taxi.yy == "+taxi.x+" "+taxi.y);
+
         if (view != null) {
             view.update(lTaxiRank.x,lTaxiRank.y);
             view.update(lCinema.x,lCinema.y);
