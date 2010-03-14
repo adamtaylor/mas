@@ -7,7 +7,7 @@
 MAS mas {
    infrastructure: Centralised
 
-   environment: main.TaxiWorldModel(gui)
+   environment: main.TaxiEnvironment(gui)
 
    agents:
        taxi;
