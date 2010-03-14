@@ -46,4 +46,16 @@ public class TaxiWorldView extends GridWorldView {
         }
     }
     
+    @Override
+    public void drawAgent(Graphics g, int x, int y, Color c, int id) {
+        Location lTaxi = taxiModel.getAgPos(0);
+        if (!lTaxi.equals(taxiModel.lTaxiRank) && !lTaxi.equals(taxiModel.lCinema)) {
+            c = Color.yellow;
+            //if (taxiModel.carryingBeer) c = Color.orange;
+            super.drawAgent(g, x, y, c, -1);
+            g.setColor(Color.black);
+            super.drawString(g, x, y, defaultFont, "Taxi");
+        }
+    }
+    
 }

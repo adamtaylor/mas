@@ -49,5 +49,20 @@ public class TaxiWorldModel extends GridWorldModel {
     public int getCINEMA() {
         return CINEMA;
     }
+    
+    boolean moveTowards(Location dest) {
+        Location taxi = getAgPos(0);
+        if (taxi.x < dest.x)        taxi.x++;
+        else if (taxi.x > dest.x)   taxi.x--;
+        if (taxi.y < dest.y)        taxi.y++;
+        else if (taxi.y > dest.y)   taxi.y--;
+        setAgPos(0, taxi); 
+        
+        if (view != null) {
+            view.update(lTaxiRank.x,lTaxiRank.y);
+            view.update(lCinema.x,lCinema.y);
+        }
+        return true;
+    }
 
 }

@@ -17,6 +17,9 @@ public class TaxiEnvironment extends Environment {
             TaxiWorldView view = new TaxiWorldView(model,"Taxi World",500);
             model.setView(view);
         }
+        
+        updatePercepts();
+
     }
     
     @Override
@@ -27,6 +30,10 @@ public class TaxiEnvironment extends Environment {
     @Override
     public boolean executeAction(String ag, Structure act) {
         return false;
+    }
+    
+    public void updatePercepts() {
+        
     }
     
 }
