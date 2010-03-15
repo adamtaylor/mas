@@ -9,14 +9,17 @@
 /* Plans */
 
 +!getCustomer
-	: not has(customer)
+	: not has(customer) | ~has(customer)
 	<- !at(taxi,taxirank);
-	   	get(customer);
-	   	!at(taxi,cinema);
-	   	drop(customer);
-	   	!getCustomer.
-	   	
-
+		.send(boss,tell,available(taxi)).
+	
++!take(P)
+	: has(customer)
+	<- !at(taxi,P);
+		.send(customer,tell,at(cinema));
+		.send(customer,achieve,arrive);
+		+ ~has(customer);
+		!getCustomer.
 	
 +!at(taxi,P) : at(taxi,P) <- true.
 +!at(taxi,P) : not at(taxi,P)

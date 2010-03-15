@@ -2,10 +2,28 @@
 
 /* Initial beliefs and rules */
 
+at(taxirank).
+
 /* Initial goals */
 
-!start.
+!goto(cinema).
 
 /* Plans */
 
-+!start : true <- .print("hello world.").
++!goto(cinema) 
+	: not in(taxi)
+	<- !get(taxi,cinema).
+
++!get(taxi,cinema) 
+	: not available(taxi)
+	<- !get(taxi,cinema).
+	
++!get(taxi,cinema)
+	: available(taxi)
+	<- .send(taxi,tell,has(customer));
+		.send(taxi,achieve,take(cinema)).
+		
++!arrive
+	: at(cinema)
+	<- .send(taxi,untell,has(customer));
+		.send(taxi,achieve,getCustomer).

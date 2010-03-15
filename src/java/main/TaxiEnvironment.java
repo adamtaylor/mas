@@ -15,7 +15,6 @@ public class TaxiEnvironment extends Environment {
     public static final Literal at = Literal.parseLiteral("at(taxi,taxirank)");
     public static final Literal ac = Literal.parseLiteral("at(taxi,cinema)");
 
-    
     @Override
     public void init(String[] args) {
         model = new TaxiWorldModel();
@@ -52,8 +51,8 @@ public class TaxiEnvironment extends Environment {
     }
     
     @Override
-    public boolean executeAction(String ag, Structure action) {
-        System.out.println("["+ag+"] doing: "+action);
+    synchronized public boolean executeAction(String ag, Structure action) {
+        logger.info("["+ag+"] doing: "+action);
         boolean result = false;
 //        if (action.equals(of)) { // of = open(fridge)
 //            result = model.openFridge();

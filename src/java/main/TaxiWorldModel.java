@@ -11,6 +11,7 @@ public class TaxiWorldModel extends GridWorldModel {
     private boolean hasCustomer = false;
     private boolean isAtTaxiRank = false;
     private boolean isAtCinema = false;
+    private boolean inTaxi = false;
     
     private static final int gridSize = 20;
     
@@ -34,6 +35,7 @@ public class TaxiWorldModel extends GridWorldModel {
     public boolean getCustomer() {
         if (isAtTaxiRank) {
             hasCustomer = true;
+            inTaxi = true;
             return true;
         }
         return false;
@@ -42,6 +44,7 @@ public class TaxiWorldModel extends GridWorldModel {
     public boolean dropCustomer() {
         if (hasCustomer) {
             hasCustomer = false;
+            inTaxi = false;
             return true;
         }
         return false;
@@ -55,6 +58,10 @@ public class TaxiWorldModel extends GridWorldModel {
         return isAtTaxiRank;
     }
     
+    public boolean inTaxi() {
+        return inTaxi;
+    }
+    
     public int getTAXIRANK() {
         return TAXIRANK;
     }
@@ -64,15 +71,15 @@ public class TaxiWorldModel extends GridWorldModel {
     }
     
     public boolean moveTowards(Location dest) {
-        logger.info("attempting to move the taxi");
+        //logger.info("attempting to move the taxi");
         Location taxi = getAgPos(0);
-        logger.info("taxi.x && taxi.yy == "+taxi.x+" "+taxi.y);
+        //logger.info("taxi.x && taxi.yy == "+taxi.x+" "+taxi.y);
         if (taxi.x < dest.x)        taxi.x++;
         else if (taxi.x > dest.x)   taxi.x--;
         if (taxi.y < dest.y)        taxi.y++;
         else if (taxi.y > dest.y)   taxi.y--;
         setAgPos(0, taxi); 
-        logger.info("taxi.x && taxi.yy == "+taxi.x+" "+taxi.y);
+        //logger.info("taxi.x && taxi.yy == "+taxi.x+" "+taxi.y);
 
         if (view != null) {
             view.update(lTaxiRank.x,lTaxiRank.y);
@@ -88,7 +95,7 @@ public class TaxiWorldModel extends GridWorldModel {
         }
 
         
-        logger.info("about to return true");
+        //logger.info("about to return true");
         return true;
     }
 

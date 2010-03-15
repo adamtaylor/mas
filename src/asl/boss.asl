@@ -8,4 +8,6 @@
 
 /* Plans */
 
-+!start : true <- .print("hello world.").
++!start 
+	: true 
+	<- .send(taxi,askOne,has(customer),available(taxi)).
