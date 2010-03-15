@@ -17,6 +17,7 @@ at(taxirank).
 +!get(taxi,cinema) 
 	: not available(taxi)
 	<- !get(taxi,cinema).
+		
 	
 +!get(taxi,cinema)
 	: available(taxi)

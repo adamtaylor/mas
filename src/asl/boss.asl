@@ -4,10 +4,21 @@
 
 /* Initial goals */
 
-!start.
+!queryTaxi.
 
 /* Plans */
 
-+!start 
++!queryTaxi2 
 	: true 
-	<- .send(taxi,askOne,has(customer),available(taxi)).
+	<- .send(taxi,askOne,has(customer),false);
+		+available(taxi);
+		.send(customer,tell,available(taxi)).
+		
++!queryTaxi
+	: available(taxi)
+	<- .send(customer,tell,available(taxi)).
+	
++!queryTaxi
+	: not available(taxi)
+	<- !queryTaxi.
+	
