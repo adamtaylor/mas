@@ -1,7 +1,7 @@
 /*
     Jason Project
 
-    -- created on March 11, 2010
+    -- created on March 15, 2010
 */
 
 MAS mas {
@@ -10,9 +10,10 @@ MAS mas {
    environment: main.TaxiEnvironment(gui)
 
    agents:
-       taxi;
+       taxi #3;
        customer;
        boss;
+       customer2;
 
    aslSourcePath: "src/asl"; 
 }

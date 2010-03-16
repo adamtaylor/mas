@@ -25,8 +25,11 @@ public class TaxiWorldModel extends GridWorldModel {
     protected TaxiWorldModel() {
         super(gridSize, gridSize, 3);
         
-        //taxi pos
-        setAgPos(0, gridSize/2, gridSize/2);
+        //taxi positions for all the taxis
+        setAgPos(0, 3, gridSize/2);
+        setAgPos(1, 6, gridSize/2);
+        setAgPos(2, 12, gridSize/2);
+
         
         add(TAXIRANK, lTaxiRank);
         add(CINEMA, lCinema);
@@ -70,15 +73,15 @@ public class TaxiWorldModel extends GridWorldModel {
         return CINEMA;
     }
     
-    public boolean moveTowards(Location dest) {
+    public boolean moveTowards(Location dest, int ag) {
         //logger.info("attempting to move the taxi");
-        Location taxi = getAgPos(0);
+        Location taxi = getAgPos(ag);
         //logger.info("taxi.x && taxi.yy == "+taxi.x+" "+taxi.y);
         if (taxi.x < dest.x)        taxi.x++;
         else if (taxi.x > dest.x)   taxi.x--;
         if (taxi.y < dest.y)        taxi.y++;
         else if (taxi.y > dest.y)   taxi.y--;
-        setAgPos(0, taxi); 
+        setAgPos(ag, taxi); 
         //logger.info("taxi.x && taxi.yy == "+taxi.x+" "+taxi.y);
 
         if (view != null) {

@@ -35,18 +35,31 @@ public class TaxiEnvironment extends Environment {
     }
     
     public void updatePercepts() {
-        clearPercepts("taxi");
         
-        // get the robot location
-        Location lTaxi = model.getAgPos(0);
+        // manual hack to work(?) for all the taxi agents
+        for(int i = 0;i<3;i++) {
+            int j = i + 1;
+            String name = "taxi" + j;
+            
+            clearPercepts(name);
+            
+            // get the taxi location
+            Location lTaxi = model.getAgPos(i);
+            
+            logger.info("taxi - "+name+ " - is at: "+lTaxi.x+" "+lTaxi.y);
 
-        // add agent location to its percepts
-        if (lTaxi.equals(model.lTaxiRank)) {
-            addPercept("taxi", at);
+            
+            // add agent location to its percepts
+            if (lTaxi.equals(model.lTaxiRank)) {
+                logger.info("taxi - "+name+ " - is at taxi rank");
+
+                addPercept(name, at);
+            }
+            if (lTaxi.equals(model.lCinema)) {
+                addPercept(name, ac);
+            } 
         }
-        if (lTaxi.equals(model.lCinema)) {
-            addPercept("taxi", ac);
-        }
+
         
     }
     
@@ -54,12 +67,13 @@ public class TaxiEnvironment extends Environment {
     synchronized public boolean executeAction(String ag, Structure action) {
         logger.info("["+ag+"] doing: "+action);
         boolean result = false;
-//        if (action.equals(of)) { // of = open(fridge)
-//            result = model.openFridge();
-//            
-//        } else if (action.equals(clf)) { // clf = close(fridge)
-//            result = model.closeFridge();
-//            
+        
+        int agInt = Integer.parseInt(ag.substring(4,5));
+        agInt = agInt - 1;
+        
+        logger.info("agInt: "+agInt);
+
+        
         if (action.getFunctor().equals("move_towards")) {
             String l = action.getTerm(0).toString();
             Location dest = null;
@@ -70,30 +84,16 @@ public class TaxiEnvironment extends Environment {
             }
 
             try {
-                result = model.moveTowards(dest);
+                result = model.moveTowards(dest,agInt);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            
         } else if (action.equals(gc)) {
             logger.info("about to getCustomer() "+action);
             result = model.getCustomer();
             
         } else if (action.equals(dc)) {
             result = model.dropCustomer();
-            
-//        } else if (action.equals(sb)) {
-//            result = model.sipBeer();
-//            
-//        } else if (action.getFunctor().equals("deliver")) {
-//            // wait 4 seconds to finish "deliver"
-//            try {
-//                Thread.sleep(4000); 
-//                result = model.addBeer( (int)((NumberTerm)action.getTerm(1)).solve());
-//            } catch (Exception e) {
-//                logger.info("Failed to execute action deliver!"+e);
-//            }
-//            
         } else {
             logger.info("Failed to execute action "+action);
         }
