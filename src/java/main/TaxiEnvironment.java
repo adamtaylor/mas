@@ -14,6 +14,7 @@ public class TaxiEnvironment extends Environment {
     public static final Literal dc  = Literal.parseLiteral("drop(customer)");
     public static final Literal at = Literal.parseLiteral("at(taxi,taxirank)");
     public static final Literal ac = Literal.parseLiteral("at(taxi,cinema)");
+    public static final Literal au = Literal.parseLiteral("at(taxi,university)");
 
     @Override
     public void init(String[] args) {
@@ -57,6 +58,9 @@ public class TaxiEnvironment extends Environment {
             }
             if (lTaxi.equals(model.lCinema)) {
                 addPercept(name, ac);
+            }
+            if (lTaxi.equals(model.lUniversity)) {
+                addPercept(name, au);
             } 
         }
 
@@ -81,6 +85,8 @@ public class TaxiEnvironment extends Environment {
                 dest = model.lTaxiRank;
             } else if (l.equals("cinema")) {
                 dest = model.lCinema;
+            } else if (l.equals("university")) {
+                dest = model.lUniversity;
             }
 
             try {

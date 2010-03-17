@@ -11,6 +11,7 @@ public class TaxiWorldView extends GridWorldView {
     private TaxiWorldModel taxiModel;
     private static final int TAXIRANK = 16;
     private static final int CINEMA = 32;
+    private static final int UNIVERSITY = 64;
     
     
     public TaxiWorldView(TaxiWorldModel model, String title, int windowSize) {
@@ -42,6 +43,13 @@ public class TaxiWorldView extends GridWorldView {
                 }
                 g.setColor(Color.black);
                 drawString(g, x, y, defaultFont, "Cinema");  
+                break;
+            case UNIVERSITY:
+                if (lTaxi.equals(taxiModel.lUniversity)) {
+                    super.drawAgent(g, x, y, Color.yellow, -1);
+                }
+                g.setColor(Color.black);
+                drawString(g, x, y, defaultFont, "University");  
                 break;
         }
     }

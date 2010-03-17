@@ -17,10 +17,12 @@ public class TaxiWorldModel extends GridWorldModel {
     
     private static final int TAXIRANK = 16;
     private static final int CINEMA = 32;
+    private static final int UNIVERSITY = 64;
     
     // Initial locations
     Location lTaxiRank = new Location(0,0);
     Location lCinema = new Location(gridSize-1,gridSize-1);
+    Location lUniversity = new Location(gridSize-1,gridSize-20);
     
     protected TaxiWorldModel() {
         super(gridSize, gridSize, 3);
@@ -30,9 +32,9 @@ public class TaxiWorldModel extends GridWorldModel {
         setAgPos(1, 6, gridSize/2);
         setAgPos(2, 12, gridSize/2);
 
-        
         add(TAXIRANK, lTaxiRank);
         add(CINEMA, lCinema);
+        add(UNIVERSITY, lUniversity);
     }
     
     public boolean getCustomer() {
@@ -87,6 +89,7 @@ public class TaxiWorldModel extends GridWorldModel {
         if (view != null) {
             view.update(lTaxiRank.x,lTaxiRank.y);
             view.update(lCinema.x,lCinema.y);
+            view.update(lUniversity.x,lUniversity.y);
         }
         
         if (taxi.x == 0 && taxi.y == 0) {

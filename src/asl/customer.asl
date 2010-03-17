@@ -14,7 +14,9 @@
 
 +!get(taxi,cinema) 
 	: not available(taxi)
-	<- .send(boss,tell,requires(customer,taxi)).
+	<- .send(boss,tell,requires(customer,taxi,cinema));
+		.send(boss,achieve,newCustomer).
+		//.send(boss,untell,requires(customer,taxi,cinema)).
 		//!get(taxi,cinema).
 		
 	

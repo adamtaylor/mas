@@ -8,11 +8,14 @@ all_proposals_received(CNPId)
      .count(refuse(CNPId), NR) &              // number of refusals received
      NP = NO + NR.
 
+id(0).
+
 /* Initial goals */
 
 // loop through looking for customers
 //!checkForCustomers.
-!startCNP(1,takeCustomer).
+//!startCNP(1,takeCustomer).
+!start.
 
 /* Plans */
 
@@ -20,11 +23,11 @@ all_proposals_received(CNPId)
 
 // start the CNP
 +!startCNP(Id,Task) 
-   <- .print("Waiting participants...");
+   <- .print("Waiting participants... ",Task);
       .wait(2000);  // wait participants introduction
       +cnp_state(Id,propose);   // remember the state of the CNP
       .findall(Name,introduction(participant,Name),LP);
-      .print("Sending CFP to ",LP);
+      .print(Id,"Sending CFP to ",LP);
       .send(LP,tell,cfp(Id,Task));
       // the deadline of the CNP is now + 4 seconds, so
       // the event +!contract(Id) is generated at that time
@@ -74,17 +77,65 @@ all_proposals_received(CNPId)
 
 /* Customer Communication Stuff */
 
-+!checkForCustomers
-	: requires(customer,taxi)
-	<- !startTaxiRide.
-	
-+!startTaxiRide
++!start
+	: requires(C,T,L)
+	<- ?requires(C,T,L);
+		!startTaxiRide(L).
+		
+//+!start
+//	: requires2(C,T,L)
+//	<- ?requires2(C,T,L);
+//		!startTaxiRide(L).
+
++!newCustomer
+	<- !start.
+
++!startTaxiRide(L)
 	: true
-	<- !startCNP(1,takeCustomer).
+	<- ?id(I);
+		//-id(I);
+		+id(I+1);
+		!startCNP(I+1,L).
+
+//+!checkForCustomers
+//	: ?requires(customer,taxi,location)
+//	<- //!checkForCinemaCustomers.
+//		//!checkForUniversityCustomers.
+//		!checkForCustomer1;
+//		!checkForCustomer2.
+
+//+!checkForCustomer1
+//	: not requires(customer1,taxi,cinema)
+//	<- !checkForCustomers.
 	
-+!checkForCustomers
-	: not requires(customer,taxi)
-	<- !checkForCustomers.
+//+!checkForCustomer2
+//	: not requires(customer2,taxi,university)
+//	<- !checkForCustomers.
+	
+//+!checkForCustomer1
+//	: requires(customer1,taxi,cinema)
+//	<- !startTaxiRide(cinema).
+	
+//+!checkForCustomer2
+//	: requires(customer2,taxi,university)
+//	<- !startTaxiRide(university).
+	
+//+!checkForCinemaCustomers
+//	: not requires(customer,taxi,cinema)
+//	<- !checkForCustomers.
+	
+//+!checkForCinemaCustomers
+//	: requires(customer,taxi,cinema)
+//	<- !startTaxiRide;
+//		!checkForCustomers.
+	
+//+!checkForUniversityCustomers
+//	: not requires(customer,taxi,university)
+//	<- !checkForCustomers.
+	
+//+!checkForUniversityCustomers
+//	: requires(customer,taxi,university)
+//	<- !startTaxiRide.
 
 //+!queryTaxi2 
 //	: true 
